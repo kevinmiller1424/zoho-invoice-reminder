@@ -3,10 +3,14 @@ from datetime import datetime, date
 import calendar
 
 import os
-ACCESS_TOKEN = os.environ.get("1000.7ab62a7056e3739946d9060fd5c5b781.a6717c79fcb64b7de4a5afc27da7bbe6")
-ORGANIZATION_ID = os.environ.get("730309921")
-TELEGRAM_TOKEN = os.environ.get("8100568290:AAGfp8-Gdv2qq9vy8o2fcFuROya8PD5ZBtI")
-TELEGRAM_CHAT_ID = os.environ.get("5556341181")
+ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+ORGANIZATION_ID = os.environ.get("ORGANIZATION_ID")
+TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
+TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
+# ACCESS_TOKEN = os.environ.get("1000.7ab62a7056e3739946d9060fd5c5b781.a6717c79fcb64b7de4a5afc27da7bbe6")
+# ORGANIZATION_ID = os.environ.get("730309921")
+# TELEGRAM_TOKEN = os.environ.get("8100568290:AAGfp8-Gdv2qq9vy8o2fcFuROya8PD5ZBtI")
+# TELEGRAM_CHAT_ID = os.environ.get("5556341181")
 
 
 # --- ZOHO CONFIGURATION ---
