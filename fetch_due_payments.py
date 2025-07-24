@@ -1,17 +1,29 @@
 import requests
 from datetime import datetime, date
 import calendar
-
 import os
+import sys
+
+# Fetch environment variables
 ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
 ORGANIZATION_ID = os.environ.get("ORGANIZATION_ID")
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-# ACCESS_TOKEN = os.environ.get("1000.7ab62a7056e3739946d9060fd5c5b781.a6717c79fcb64b7de4a5afc27da7bbe6")
-# ORGANIZATION_ID = os.environ.get("730309921")
-# TELEGRAM_TOKEN = os.environ.get("8100568290:AAGfp8-Gdv2qq9vy8o2fcFuROya8PD5ZBtI")
-# TELEGRAM_CHAT_ID = os.environ.get("5556341181")
 
+# Check if all required env variables are present
+missing_vars = []
+for var_name, var_value in [
+    ("ACCESS_TOKEN", ACCESS_TOKEN),
+    ("ORGANIZATION_ID", ORGANIZATION_ID),
+    ("TELEGRAM_TOKEN", TELEGRAM_TOKEN),
+    ("TELEGRAM_CHAT_ID", TELEGRAM_CHAT_ID)
+]:
+    if not var_value:
+        missing_vars.append(var_name)
+
+if missing_vars:
+    print(f"Error: Missing environment variables: {', '.join(missing_vars)}")
+    sys.exit(1)
 
 def fetch_due_payments():
     headers = {
@@ -41,7 +53,6 @@ def fetch_due_payments():
     today = date.today()
     start_date = date(today.year, 1, 1)
 
-    # Previous month cutoff
     prev_month = today.month - 1 if today.month > 1 else 12
     prev_year = today.year if today.month > 1 else today.year - 1
     end_date = date(prev_year, prev_month, calendar.monthrange(prev_year, prev_month)[1])
@@ -71,7 +82,6 @@ def fetch_due_payments():
     if not due_invoices:
         return "No overdue payments found in the specified date range."
 
-    # Build table string
     table_header = f"{'Company Name':<30} | {'Amount Due':<12} | {'Invoice No':<15} | {'Due Date':<10}\n"
     table_header += "-" * 80 + "\n"
     table_rows = ""
@@ -96,10 +106,16 @@ def send_to_telegram(message):
     else:
         print("✅ Message sent to Telegram.")
 
+
 if __name__ == "__main__":
+    print("Starting fetch_due_payments script...")
+
     message = fetch_due_payments()
+    print("Fetched message:")
     print(message)
 
-    # Only send if there's a valid table with data
     if "Company Name" in message:
+        print("Sending message to Telegram...")
         send_to_telegram(message)
+    else:
+        print("No valid overdue payment data to send.")
