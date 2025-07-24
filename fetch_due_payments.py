@@ -13,14 +13,6 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
 # TELEGRAM_CHAT_ID = os.environ.get("5556341181")
 
 
-# --- ZOHO CONFIGURATION ---
-ACCESS_TOKEN = "1000.7ab62a7056e3739946d9060fd5c5b781.a6717c79fcb64b7de4a5afc27da7bbe6"
-ORGANIZATION_ID = "730309921"
-
-# --- TELEGRAM CONFIGURATION ---
-TELEGRAM_TOKEN = "8100568290:AAGfp8-Gdv2qq9vy8o2fcFuR0ya8PD5ZBtI"
-TELEGRAM_CHAT_ID = "5556341181"
-
 def fetch_due_payments():
     headers = {
         "Authorization": f"Zoho-oauthtoken {ACCESS_TOKEN}"
